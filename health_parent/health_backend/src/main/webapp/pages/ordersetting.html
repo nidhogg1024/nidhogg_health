@@ -141,7 +141,7 @@
                 showMessage(r){
                     if(r == 'Error: Request failed with status code 403'){
                         //权限不足
-                        this.$message.error('无访问权限');
+                        this.$message.error('对不起，你没有权限进行操作');
                         return;
                     }else{
                         this.$message.error('未知错误');
