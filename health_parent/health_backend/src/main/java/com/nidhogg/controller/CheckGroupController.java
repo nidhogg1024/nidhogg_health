@@ -9,6 +9,7 @@ import com.nidhogg.pojo.CheckGroup;
 import com.nidhogg.pojo.CheckItem;
 import com.nidhogg.service.CheckGroupService;
 import jdk.nashorn.internal.runtime.ECMAException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class CheckGroupController {
     private CheckGroupService checkGroupService;
 
     //新增检查组
+    @PreAuthorize("hasAuthority('CHECKGROUP_ADD')")
     @RequestMapping("/add")
     public Result add(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
         try{
@@ -38,12 +40,14 @@ public class CheckGroupController {
         return new Result(true,MessageConstant.ADD_CHECKGROUP_SUCCESS);
     }
     //分页查询检查组
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = checkGroupService.findPage(queryPageBean);
         return pageResult;
     }
     //根据ID查询检查组
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     @RequestMapping("/findById")
     public Result findById(Integer id){
         try{
@@ -55,6 +59,7 @@ public class CheckGroupController {
         }
     }
     //根据检查组ID查询检查项ID
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     @RequestMapping("/findCheckItemIdsByCheckGroupId")
     public Result findCheckItemIdsByCheckGroupId(Integer id){
         try{
@@ -66,6 +71,7 @@ public class CheckGroupController {
         }
     }
     //编辑检查组
+    @PreAuthorize("hasAuthority('CHECKGROUP_EDIT')")
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
         try{
@@ -77,6 +83,7 @@ public class CheckGroupController {
         return new Result(true,MessageConstant.EDIT_CHECKGROUP_SUCCESS);
     }
     //删除检查组
+    @PreAuthorize("hasAuthority('CHECKGROUP_DELETE')")
     @RequestMapping("/delete")
     public Result delete(Integer id){
         try{
@@ -88,6 +95,7 @@ public class CheckGroupController {
         return new Result(true,MessageConstant.DELETE_CHECKGROUP_SUCCESS);
     }
     //查询所有检查项
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     @RequestMapping("/findAll")
     public Result findAll(){
         List<CheckGroup> checkGroupList = checkGroupService.findAll();

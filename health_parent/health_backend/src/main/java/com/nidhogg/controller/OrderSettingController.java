@@ -7,6 +7,7 @@ import com.nidhogg.entity.Result;
 import com.nidhogg.pojo.OrderSetting;
 import com.nidhogg.service.OrderSettingService;
 import com.nidhogg.utils.POIUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +65,7 @@ public class OrderSettingController {
         }
     }
     //根据指定日期进行预约设置
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     @RequestMapping("/editNumberByDate")
     public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
         try{

@@ -228,6 +228,17 @@
                 this.findPage();//调用分页查询
             },
             methods: {
+                //显示权限控制信息
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('对不起，你没有权限进行操作');
+                        return;
+                    }else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
+                },
                 //编辑提交
                 handleEdit() {
                     //进行表单校验
@@ -275,6 +286,8 @@
                                 }else {//失败
                                     this.$message.error(res.data.message);
                                 }
+                            }).catch((r)=>{
+                                this.showMessage(r);
                             });
                         }
                         else{
@@ -296,6 +309,8 @@
                         //解析数据并赋值
                         this.pagination.total=res.data.total;
                         this.dataList=res.data.rows;
+                    }).catch((r)=>{
+                        this.showMessage(r);
                     });
                 },
                 // 重置表单
@@ -317,6 +332,8 @@
                         }else {
                             this.$message.error(res.data.message);
                         }
+                    }).catch((r)=>{
+                        this.showMessage(r);
                     });
                 },
                 //切换页码
@@ -340,6 +357,8 @@
                                 //重新获取分页
                                 this.findPage();
                             }
+                        }).catch((r)=>{
+                            this.showMessage(r);
                         });
                     }).catch(()=>{
                         this.$message({

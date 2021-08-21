@@ -138,6 +138,16 @@
                 this.initData(null);
             },
             methods: {
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('无访问权限');
+                        return;
+                    }else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
+                },
 				//预约设置
                 handleOrderSet(day){
                     this.$prompt('请输入可预约人数', '预约设置', {
@@ -160,6 +170,8 @@
                             }else{
                                 this.$message.error(response.data.message);
                             }
+                        }).catch((r)=>{
+                            this.showMessage(r);
                         });
                     }).catch(() => {
                         this.$message({

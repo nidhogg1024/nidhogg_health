@@ -10,6 +10,7 @@ import com.nidhogg.pojo.Setmeal;
 import com.nidhogg.service.SetmealService;
 import com.nidhogg.utils.QiniuUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +55,7 @@ public class SetmealController {
         }
     }
     //新增套餐
+    @PreAuthorize("hasAuthority('SETMEAL_ADD')")
     @RequestMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds){
         try {
@@ -66,6 +68,7 @@ public class SetmealController {
         return new Result(true,MessageConstant.ADD_SETMEAL_SUCCESS);
     }
     //分页查询套餐
+    @PreAuthorize("hasAuthority('SETMEAL_QUERY')")
     @RequestMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult = setmealService.pageQuery(

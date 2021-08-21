@@ -280,6 +280,17 @@
                 this.findPage();
             },
             methods: {
+                //显示权限控制信息
+                showMessage(r){
+                    if(r == 'Error: Request failed with status code 403'){
+                        //权限不足
+                        this.$message.error('对不起，你没有权限进行操作');
+                        return;
+                    }else{
+                        this.$message.error('未知错误');
+                        return;
+                    }
+                },
                 //编辑
                 handleEdit() {
                     axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData)
@@ -327,6 +338,8 @@
                         //解析数据并赋值
                         this.pagination.total=res.data.total;
                         this.dataList=res.data.rows;
+                    }).catch((r)=>{
+                        this.showMessage(r);
                     });
                 },
                 // 重置表单
@@ -348,6 +361,8 @@
                             //fail
                             this.$message.error(res.data.message);
                         }
+                    }).catch((r)=>{
+                        this.showMessage(r);
                     });
                 },
                 // 弹出编辑窗口
@@ -371,6 +386,8 @@
                                 }else{
                                     this.$message.error(res.data.message);
                                 }
+                            }).catch((r)=>{
+                                this.showMessage(r);
                             });
                         }else{
                             this.$message.error("获取数据失败，请刷新当前页面");
@@ -398,6 +415,8 @@
                                 //重新获取分页
                                 this.findPage();
                             }
+                        }).catch((r)=>{
+                            this.showMessage(r);
                         });
                     }).catch(()=>{
                         this.$message({
