@@ -4,6 +4,7 @@ import com.nidhogg.entity.PageResult;
 import com.nidhogg.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Nidhogg on 2021/8/20.
@@ -16,4 +17,6 @@ public interface SetmealService {
     List<Setmeal> findAll();
 
     Setmeal findById(int id);
+
+    List<Map<String,Object>> findSetmealCount();
 }

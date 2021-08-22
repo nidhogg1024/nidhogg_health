@@ -8,6 +8,9 @@ import com.nidhogg.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Nidhogg on 2021/8/21.
  */
@@ -21,6 +24,19 @@ public class MemberServiceImpl  implements MemberService{
     public Member findByTelephone(String telephone) {
         return memberDao.findByTelephone(telephone);
     }
+
+    @Override
+    //根据月份统计会员数量
+    public List<Integer> findMemberCountByMonth(List<String> month) {
+        List<Integer> list = new ArrayList<>();
+        for(String m : month){
+            m = m + ".31";//格式：2019.04.31
+            Integer count = memberDao.findMemberCountBeforeDate(m);
+            list.add(count);
+        }
+        return list;
+    }
+
     //新增会员
     public void add(Member member) {
         if(member.getPassword() != null){
