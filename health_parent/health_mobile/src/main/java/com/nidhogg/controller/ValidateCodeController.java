@@ -24,13 +24,18 @@ public class ValidateCodeController {
     @RequestMapping("/send4Order")
     public Result send4Order(String telephone){
         Integer code = ValidateCodeUtils.generateValidateCode(4);//生成4位数字验证码
+        if(telephone.contains("@")){
+            new SendMailController().send(telephone,code.toString());
+        }else {
+            new SMSController().send(telephone,code.toString());
+        }
         /*try {
             //发送短信
             SMSUtils.sendShortMessage(SMSUtils.VALIDATE_CODE,telephone,code.toString());
         } catch (ClientException e) {
             e.printStackTrace();
             //验证码发送失败
-            return new Result(false, MessageConstant.SEND_VALIDATECODE_FAIL);
+
         }*/
         System.out.println("发送的手机验证码为：" + code);
         //将生成的验证码缓存到redis

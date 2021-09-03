@@ -51,7 +51,17 @@ function checkTelephone(telephone) {
         return true;
     }
 }
-
+/*
+* 校验邮箱
+* */
+function checkMail(email){
+    var reg =  /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+    if(reg.test(email)){
+        return true;
+    }else{
+        return false;
+    }
+}
 /**
  * 身份证号码校验
  * 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
